@@ -1,0 +1,4 @@
+#! /usr/bin/perl
+# transform an input stream of tab-separated lines with trailing 64 bit CSQ IDs by decoding the CSQ IDs to comma separated lists of Sequence Ontology variant consequence names.
+@csqs=("transcript_variant","intron_variant","exon_variant","five_prime_UTR_variant","three_prime_UTR_variant","coding_sequence_variant","synonymous_variant","splice_region_variant","extended_intronic_splice_region_variant","exonic_splice_region_variant","stop_retained_variant","missense_variant","conservative_missense_variant","non_conservative_missense_variant","inframe_deletion","conservative_inframe_deletion","disruptive_inframe_deletion","inframe_insertion","conservative_inframe_insertion","disruptive_inframe_insertion","start_lost","stop_lost","frameshift_variant","stop_gained","splice_donor_variant","splice_acceptor_variant");
+while (<>) { @F = split /\t/; $x = pop @F; print join("\t",(@F,join(",",reverse(map {$csqs[$_]} (grep {$x & (1 << $_)} (0..$#csqs))))))."\n" }
